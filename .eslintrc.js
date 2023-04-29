@@ -83,10 +83,10 @@ module.exports = {
     ],
     'simple-import-sort/exports': 'error',
     'import/no-extraneous-dependencies': ['error', {devDependencies: true}],
-    'react/function-component-definition': [
-      'error',
-      {namedComponents: 'function-declaration'},
-    ],
+    // 'react/function-component-definition': [
+    //   'error',
+    //   {namedComponents: 'arrow-function'},
+    // ],
     'react/display-name': ['error'],
   },
 };
