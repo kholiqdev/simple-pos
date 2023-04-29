@@ -71,7 +71,17 @@ module.exports = {
           // 3. Any other 3rd party imports
           ['^@?\\w'],
           // 4. Our modules, other than the module the current file is part of
-          ['^@components?\\w', '^@features?\\w', '^@hooks?\\w'],
+          [
+            '^@components?\\w',
+            '^@features?\\w',
+            '^@hooks?\\w',
+            '^@utils?\\w',
+            '^@navigation?\\w',
+            '^@localization?\\w',
+            '^@lib?\\w',
+            '^@services?\\w',
+            '^@theme?\\w',
+          ],
           // 5. Other parts of the same module that the current file is part of
           ['^\\.'],
           // 6. Styles
