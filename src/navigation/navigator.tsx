@@ -1,7 +1,8 @@
 import * as React from 'react';
 
-import SharedStack from '@navigation/stacks/SharedStack';
 import {NavigationContainer} from '@react-navigation/native';
+
+import SharedStack from '@navigation/stacks/SharedStack';
 
 export default function Navigator(): JSX.Element {
   const isAuthUser = true;

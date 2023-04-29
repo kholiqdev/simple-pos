@@ -1,7 +1,8 @@
-import {type RouteNames} from '@navigation/routes';
-import {type StackRoutesType} from '@navigation/types/common';
 import {type ParamListBase, type RouteProp} from '@react-navigation/native';
 import {type NativeStackNavigationProp} from '@react-navigation/native-stack';
+
+import {type RouteNames} from '@navigation/routes';
+import {type StackRoutesType} from '@navigation/types/common';
 
 export interface SharedStackParamList extends ParamListBase {
   [RouteNames.SplashScreen]: undefined;

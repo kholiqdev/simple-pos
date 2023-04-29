@@ -1,13 +1,13 @@
 import * as React from 'react';
 
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+
+import SplashScreen from '@features/shared/screens/SplashScreen';
 import {RouteNames} from '@navigation/routes';
 import {
   type SharedStackParamList,
   type SharedStackRoutesType,
 } from '@navigation/types/shared';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-
-import SplashScreen from '@features/shared/screens/SplashScreen';
 
 const Stack = createNativeStackNavigator<SharedStackParamList>();
 
