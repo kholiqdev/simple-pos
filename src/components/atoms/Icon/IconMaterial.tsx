@@ -1,4 +1,5 @@
 import React from 'react';
+import {Pressable} from 'react-native';
 
 import {useTheme} from '@shopify/restyle';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -10,6 +11,7 @@ export type IconMaterialProps = {
   name: string;
   color?: string;
   size?: number;
+  onPress?: () => void;
 } & BoxProps;
 
 export default React.memo(function IconMaterial(props: IconMaterialProps) {
@@ -19,12 +21,15 @@ export default React.memo(function IconMaterial(props: IconMaterialProps) {
     name,
     color = theme.colors.textPrimaryColor,
     size = 14,
+    onPress,
     ...baseProps
   } = props;
 
   return (
-    <Box testID={testID} {...baseProps}>
-      <Icon name={name} size={size} color={color} />
-    </Box>
+    <Pressable onPress={onPress}>
+      <Box testID={testID} {...baseProps}>
+        <Icon name={name} size={size} color={color} />
+      </Box>
+    </Pressable>
   );
 });
