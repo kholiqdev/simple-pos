@@ -1,11 +1,10 @@
 import React from 'react';
 import {FlatList, type FlatListProps, type ListRenderItem} from 'react-native';
 
+import ProductCard from '@features/sales/components/ProductCard';
+import {useProductActions} from '@features/sales/store/product';
 import {type Product} from '@features/sales/types/product';
 import {scale, verticalScale} from '@utils/layout';
-
-import {useProductActions} from '../store/product';
-import ProductCard from './ProductCard';
 
 type ProductSalesListProps<T> = {
   data: T[];

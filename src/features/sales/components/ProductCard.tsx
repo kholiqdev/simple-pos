@@ -3,10 +3,9 @@ import React from 'react';
 import {Gap, Text} from '@components/atoms';
 import Box, {type BoxProps} from '@components/atoms/Box/Box';
 import {CounterButton} from '@components/molecules';
+import ProductImage from '@features/sales/components/ProductImage';
+import {useProductInBasketQuantityById} from '@features/sales/store/product';
 import {formatCurrency} from '@utils/currency';
-
-import {useProductInBasketQuantityById} from '../store/product';
-import ProductImage from './ProductImage';
 
 type ProductCardProps = {
   onIncrement?: () => void;

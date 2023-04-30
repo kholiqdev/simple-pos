@@ -2,9 +2,8 @@ import React from 'react';
 import {FlatList, type FlatListProps, type ListRenderItem} from 'react-native';
 
 import {Box, Gap} from '@components/atoms';
+import CategoryBadge from '@features/sales/components/CategoryBadge';
 import {type ICategoryItem} from '@features/sales/types/category';
-
-import CategoryBadge from './CategoryBadge';
 
 type CategoryBadgeListProps<T> = {
   data: T[];
