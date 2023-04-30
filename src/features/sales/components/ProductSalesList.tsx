@@ -21,7 +21,7 @@ export default function ProductSalesList(
   const renderItem: ListRenderItem<Product> = ({item, index}) => {
     return (
       <ProductCard
-        flex={index !== data.length ? 1 : 0.5}
+        flex={index !== data.length - 1 || data.length !== 1 ? 1 : 0.5}
         style={{marginRight: index % 2 === 0 ? scale(12) : 0}}
         data={item}
         onIncrement={() => {
