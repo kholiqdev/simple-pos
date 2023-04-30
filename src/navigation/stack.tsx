@@ -14,7 +14,10 @@ export default function AppStack(): JSX.Element {
   return (
     <Stack.Navigator
       screenOptions={{
-        headerShown: false,
+        headerTitleAlign: 'center',
+        headerShadowVisible: false,
+        headerBackTitleVisible: false,
+        animation: 'fade_from_bottom',
       }}
       initialRouteName={RouteNames.SalesScreen}>
       {isAuthUser ? (

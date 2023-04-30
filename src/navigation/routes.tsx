@@ -1,4 +1,5 @@
 export enum RouteNames {
   SplashScreen = 'SplashScreen',
-  SalesScreen = 'SplashScrSalesScreeneen',
+  SalesScreen = 'SalesScreen',
+  OrderScreen = 'OrderScreen',
 }
