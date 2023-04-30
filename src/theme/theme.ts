@@ -35,8 +35,11 @@ const theme = createTheme({
     cardPrimaryBackground: palette.purplePrimary,
     cardSecondaryBackground: palette.white,
     cardTertiaryBackground: palette.grayPrimary,
+    buttonPrimaryBackground: palette.black,
+    buttonSecondaryBackground: palette.white,
     textPrimaryColor: palette.black,
     textSecondaryColor: palette.grayPrimary,
+    textTertiaryColor: palette.white,
   },
   spacing: {
     xs: 8,
