@@ -5,11 +5,17 @@ import {t as _} from 'i18next';
 
 import {Gap, HStack, IconMaterial, Input} from '@components/atoms';
 import {BaseLayout} from '@components/layouts';
+import {
+  CartCounter,
+  CategoryBadgeList,
+  FloatingOrderButton,
+  ProductSalesList,
+} from '@features/sales/components';
+import {
+  useProductInBasketTotalPrice,
+  useProductsInBasketCount,
+} from '@features/sales/store/product';
 import {type Theme} from '@theme/theme';
-
-import CartCounter from '../components/CartCounter';
-import CategoryBadgeList from '../components/CategoryBadgeList';
-import ProductSalesList from '../components/ProductSalesList';
 
 const productCategories = [
   {
@@ -49,12 +55,14 @@ const products = [
 
 export default function SalesScreen(): JSX.Element {
   const theme = useTheme<Theme>();
+  const productInBasketCount = useProductsInBasketCount();
+  const productInBasketTotalPrice = useProductInBasketTotalPrice();
 
   return (
     <BaseLayout flex={1} pt="s">
       <HStack justifyContent="space-between" alignItems="center">
         <IconMaterial name="menu" size={24} />
-        <CartCounter count={2} />
+        <CartCounter count={productInBasketCount} />
       </HStack>
       <Gap height={12} />
       <Input
@@ -71,6 +79,10 @@ export default function SalesScreen(): JSX.Element {
       <CategoryBadgeList data={productCategories} />
       <Gap height={12} />
       <ProductSalesList data={products} />
+      <FloatingOrderButton
+        title={_('add_to_order')}
+        price={productInBasketTotalPrice}
+      />
     </BaseLayout>
   );
 }
