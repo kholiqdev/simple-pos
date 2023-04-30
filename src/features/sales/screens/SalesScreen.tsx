@@ -8,6 +8,7 @@ import {type Theme} from '@theme/theme';
 
 import CartCounter from '../components/CartCounter';
 import CategoryBadgeList from '../components/CategoryBadgeList';
+import ProductSalesList from '../components/ProductSalesList';
 
 const productCategories = [
   {
@@ -19,6 +20,29 @@ const productCategories = [
     id: 2,
     name: 'Drinks & Beverages',
     iconName: 'glass-cocktail',
+  },
+];
+
+const products = [
+  {
+    id: 1,
+    name: 'Chicken',
+    price: 10000,
+  },
+  {
+    id: 2,
+    name: 'Beef',
+    price: 20000,
+  },
+  {
+    id: 3,
+    name: 'Pork',
+    price: 30000,
+  },
+  {
+    id: 4,
+    name: 'Fish',
+    price: 40000,
   },
 ];
 
@@ -44,6 +68,8 @@ export default function SalesScreen(): JSX.Element {
       />
       <Gap height={12} />
       <CategoryBadgeList data={productCategories} />
+      <Gap height={12} />
+      <ProductSalesList data={products} />
     </BaseLayout>
   );
 }
