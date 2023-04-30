@@ -1,7 +1,11 @@
+import {type Category} from '@features/sales/types/category';
+
 export interface Product {
   id: number;
+  categoryId: number;
   name: string;
   price: number;
+  description: string;
 }
 
 export interface ProductInBasket {
@@ -11,6 +15,8 @@ export interface ProductInBasket {
 
 export interface ProductStore {
   productsInBasket: ProductInBasket[];
+  products: Product[];
+  productCategories: Category[];
   actions: {
     addProductToBasket: (val: Product) => void;
     removeProductFromBasket: (productId: number) => void;
