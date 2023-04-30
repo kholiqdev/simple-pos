@@ -6,6 +6,12 @@ import {languageResources} from '@localization/helpers/resources';
 
 import {getLastSelectedLanguage} from './helpers/language';
 
+declare module 'i18next' {
+  interface CustomTypeOptions {
+    returnNull: false;
+  }
+}
+
 const languageDetector: LanguageDetectorAsyncModule = {
   type: 'languageDetector',
   async: true,
@@ -24,6 +30,7 @@ i18n
     react: {
       useSuspense: false,
     },
+    returnNull: false,
     compatibilityJSON: 'v3',
     resources: languageResources,
     fallbackLng: Languages.en,
