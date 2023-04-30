@@ -6,6 +6,8 @@ import {type BoxProps} from '@components/atoms/Box/Box';
 
 type ProductImageProps = {
   source: ImageSourcePropType;
+  width?: number;
+  height?: number;
 } & BoxProps;
 
 const imageProductHeight = Dimensions.get('window').width / 2.7;
@@ -13,7 +15,12 @@ const imageProductHeight = Dimensions.get('window').width / 2.7;
 export default React.memo(function ProductImage(
   props: ProductImageProps,
 ): JSX.Element {
-  const {source, ...baseProps} = props;
+  const {
+    source,
+    width = '100%',
+    height = imageProductHeight,
+    ...baseProps
+  } = props;
   return (
     <Box
       borderWidth={5}
@@ -23,8 +30,8 @@ export default React.memo(function ProductImage(
       <Image
         source={source}
         style={{
-          width: '100%',
-          height: imageProductHeight,
+          width,
+          height,
           borderRadius: 150,
         }}
         resizeMode="contain"
