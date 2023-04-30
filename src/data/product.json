@@ -1,0 +1,58 @@
+[
+  {
+    "id": 1,
+    "categoryId": 1,
+    "name": "Chicken",
+    "price": 10000,
+    "description": "This is a chicken"
+  },
+  {
+    "id": 2,
+    "categoryId": 1,
+    "name": "Beef",
+    "price": 20000,
+    "description": "This is a beef"
+  },
+  {
+    "id": 3,
+    "categoryId": 1,
+    "name": "Pork",
+    "price": 30000,
+    "description": "This is a pork"
+  },
+  {
+    "id": 4,
+    "categoryId": 1,
+    "name": "Fish",
+    "price": 40000,
+    "description": "This is a fish"
+  },
+  {
+    "id": 5,
+    "categoryId": 2,
+    "name": "Coca",
+    "price": 5000,
+    "description": "This is a coca"
+  },
+  {
+    "id": 6,
+    "categoryId": 2,
+    "name": "Pepsi",
+    "price": 6000,
+    "description": "This is a pepsi"
+  },
+  {
+    "id": 7,
+    "categoryId": 2,
+    "name": "Fanta",
+    "price": 7000,
+    "description": "This is a fanta"
+  },
+  {
+    "id": 8,
+    "categoryId": 2,
+    "name": "Sprite",
+    "price": 8000,
+    "description": "This is a sprite"
+  }
+]

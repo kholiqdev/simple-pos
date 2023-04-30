@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "name": "Food & Groceries",
+    "description": "Food & Groceries",
+    "iconName": "food"
+  },
+  {
+    "id": 2,
+    "name": "Drinks & Beverages",
+    "description": "Drinks & Beverages",
+    "iconName": "glass-cocktail"
+  }
+]
