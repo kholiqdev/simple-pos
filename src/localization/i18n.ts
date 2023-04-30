@@ -3,6 +3,7 @@ import {initReactI18next} from 'react-i18next';
 
 import {Languages} from '@localization/constants/language';
 import {languageResources} from '@localization/helpers/resources';
+import {AppStorageKeys, storage} from '@lib/storage';
 
 import {getLastSelectedLanguage} from './helpers/language';
 
@@ -20,6 +21,9 @@ const languageDetector: LanguageDetectorAsyncModule = {
     callback(lastSelectedLang);
   },
   init: () => {},
+  cacheUserLanguage: (lng: string) => {
+    storage.set(AppStorageKeys.LANGUAGE, lng);
+  },
 };
 
 // eslint-disable-next-line @typescript-eslint/no-floating-promises
