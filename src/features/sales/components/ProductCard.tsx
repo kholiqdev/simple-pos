@@ -3,7 +3,9 @@ import React from 'react';
 import {Gap, Text} from '@components/atoms';
 import Box, {type BoxProps} from '@components/atoms/Box/Box';
 import {CounterButton} from '@components/molecules';
+import {formatCurrency} from '@utils/currency';
 
+import {useProductInBasketQuantityById} from '../store/product';
 import ProductImage from './ProductImage';
 
 type ProductCardProps = {
@@ -18,7 +20,8 @@ type ProductCardProps = {
 
 export default function ProductCard(props: ProductCardProps): JSX.Element {
   const {onIncrement, onDecrement, data, ...baseProps} = props;
-  const {name, price} = data;
+  const {id, name, price} = data;
+  const productQty = useProductInBasketQuantityById(id);
   return (
     <Box
       backgroundColor="cardSecondaryBackground"
@@ -37,11 +40,11 @@ export default function ProductCard(props: ProductCardProps): JSX.Element {
         {name}
       </Text>
       <Text variant="body" fontWeight="bold">
-        Rp {price}
+        {formatCurrency(price)}
       </Text>
       <Gap height={12} />
       <CounterButton
-        count={0}
+        count={productQty}
         onIncrement={onIncrement}
         onDecrement={onDecrement}
       />
