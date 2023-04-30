@@ -1,15 +1,19 @@
+import productsJson from '@data/product.json';
+import productCategoriesJson from '@data/product-category.json';
 import {create} from 'zustand';
 import {createJSONStorage, persist} from 'zustand/middleware';
 import {shallow} from 'zustand/shallow';
 
+import {type Category} from '@features/sales/types/category';
+import {type Product, type ProductStore} from '@features/sales/types/product';
 import {zustandStorage} from '@lib/storage';
-
-import {type ProductStore} from '../types/product';
 
 const useProductStore = create<ProductStore>()(
   persist(
     (set, get) => ({
       productsInBasket: [],
+      products: productsJson as Product[],
+      productCategories: productCategoriesJson as Category[],
       actions: {
         addProductToBasket: product => {
           const {productsInBasket} = get();
@@ -88,13 +92,19 @@ const useProductStore = create<ProductStore>()(
     {
       name: 'products-store',
       storage: createJSONStorage(() => zustandStorage),
-      partialize: state => ({}),
+      partialize: state => ({products: state.products}),
     },
   ),
 );
 
 export const useProductActions = (): ProductStore['actions'] =>
   useProductStore(state => state.actions);
+
+export const useGetProducts = (): ProductStore['products'] =>
+  useProductStore(state => state.products, shallow);
+
+export const useGetProductCategories = (): ProductStore['productCategories'] =>
+  useProductStore(state => state.productCategories, shallow);
 
 export const useProductsInBasket = (): ProductStore['productsInBasket'] =>
   useProductStore(state => state.productsInBasket, shallow);
