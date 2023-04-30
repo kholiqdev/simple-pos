@@ -12,49 +12,17 @@ import {
   ProductSalesList,
 } from '@features/sales/components';
 import {
+  useGetProductCategories,
+  useGetProducts,
   useProductInBasketTotalPrice,
   useProductsInBasketCount,
 } from '@features/sales/store/product';
 import {type Theme} from '@theme/theme';
 
-const productCategories = [
-  {
-    id: 1,
-    name: 'Food & Groceries',
-    iconName: 'food',
-  },
-  {
-    id: 2,
-    name: 'Drinks & Beverages',
-    iconName: 'glass-cocktail',
-  },
-];
-
-const products = [
-  {
-    id: 1,
-    name: 'Chicken',
-    price: 10000,
-  },
-  {
-    id: 2,
-    name: 'Beef',
-    price: 20000,
-  },
-  {
-    id: 3,
-    name: 'Pork',
-    price: 30000,
-  },
-  {
-    id: 4,
-    name: 'Fish',
-    price: 40000,
-  },
-];
-
 export default function SalesScreen(): JSX.Element {
   const theme = useTheme<Theme>();
+  const products = useGetProducts();
+  const productCategories = useGetProductCategories();
   const productInBasketCount = useProductsInBasketCount();
   const productInBasketTotalPrice = useProductInBasketTotalPrice();
 
