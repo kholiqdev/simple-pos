@@ -17,14 +17,51 @@ import {
   useProductInBasketTotalPrice,
   useProductsInBasketCount,
 } from '@features/sales/store/product';
+import {type Product} from '@features/sales/types/product';
+import useFilter, {type Filter} from '@hooks/useFilter';
 import {type Theme} from '@theme/theme';
+
+const filterByCategory = (data: Product[], categoryId: number): Product[] => {
+  if (categoryId === 0) {
+    return data;
+  }
+  return data.filter(item => item.categoryId === categoryId);
+};
 
 export default function SalesScreen(): JSX.Element {
   const theme = useTheme<Theme>();
-  const products = useGetProducts();
+  const [filter, setFilter] = React.useState<Filter<Product>>({
+    search: {
+      query: '',
+      field: ['name'],
+    },
+    sort: {
+      field: 'id',
+      order: 'asc',
+    },
+  });
+  const [categoryFilter, setCategoryFilter] = React.useState<number>(1);
+
   const productCategories = useGetProductCategories();
+  const products = useGetProducts();
   const productInBasketCount = useProductsInBasketCount();
   const productInBasketTotalPrice = useProductInBasketTotalPrice();
+
+  const filteredProducts = filterByCategory(
+    useFilter(products.length > 0 ? products : [], filter),
+    categoryFilter,
+  );
+
+  const onSearch = (query: string): void => {
+    const newFilter = {
+      ...filter,
+      search: {
+        ...filter.search,
+        query,
+      },
+    };
+    setFilter(newFilter);
+  };
 
   return (
     <BaseLayout flex={1} pt="s">
@@ -42,11 +79,16 @@ export default function SalesScreen(): JSX.Element {
             color={theme.colors.textSecondaryColor}
           />
         }
+        onChangeText={onSearch}
+        value={filter.search.query}
       />
       <Gap height={12} />
-      <CategoryBadgeList data={productCategories} />
+      <CategoryBadgeList
+        data={productCategories}
+        onCategorySelected={setCategoryFilter}
+      />
       <Gap height={12} />
-      <ProductSalesList data={products} />
+      <ProductSalesList data={filteredProducts} />
       <FloatingOrderButton
         title={_('add_to_order')}
         price={productInBasketTotalPrice}
