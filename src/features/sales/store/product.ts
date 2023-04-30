@@ -1,85 +1,97 @@
 import {create} from 'zustand';
+import {createJSONStorage, persist} from 'zustand/middleware';
 import {shallow} from 'zustand/shallow';
+
+import {zustandStorage} from '@lib/storage';
 
 import {type ProductStore} from '../types/product';
 
-const useProductStore = create<ProductStore>((set, get) => ({
-  productsInBasket: [],
-  actions: {
-    addProductToBasket: product => {
-      const {productsInBasket} = get();
-      const productInBasket = productsInBasket.find(
-        p => p.product.id === product.id,
-      );
-      if (productInBasket !== undefined) {
-        set({
-          productsInBasket: productsInBasket.map(p => {
-            if (p.product.id === product.id) {
-              return {
-                ...p,
-                quantity: p.quantity + 1,
-              };
-            }
-            return p;
-          }),
-        });
-      } else {
-        set({
-          productsInBasket: [
-            ...productsInBasket,
-            {
-              product,
-              quantity: 1,
-            },
-          ],
-        });
-      }
-    },
-    removeProductFromBasket: productId => {
-      const {productsInBasket} = get();
-      set({
-        productsInBasket: productsInBasket.filter(
-          p => p.product.id !== productId,
-        ),
-      });
-    },
-    increaseProductQuantityInBasket: productId => {
-      const {productsInBasket} = get();
-      set({
-        productsInBasket: productsInBasket.map(p => {
-          if (p.product.id === productId) {
-            return {
-              ...p,
-              quantity: p.quantity + 1,
-            };
+const useProductStore = create<ProductStore>()(
+  persist(
+    (set, get) => ({
+      productsInBasket: [],
+      actions: {
+        addProductToBasket: product => {
+          const {productsInBasket} = get();
+          const productInBasket = productsInBasket.find(
+            p => p.product.id === product.id,
+          );
+          if (productInBasket !== undefined) {
+            set({
+              productsInBasket: productsInBasket.map(p => {
+                if (p.product.id === product.id) {
+                  return {
+                    ...p,
+                    quantity: p.quantity + 1,
+                  };
+                }
+                return p;
+              }),
+            });
+          } else {
+            set({
+              productsInBasket: [
+                ...productsInBasket,
+                {
+                  product,
+                  quantity: 1,
+                },
+              ],
+            });
           }
-          return p;
-        }),
-      });
+        },
+        removeProductFromBasket: productId => {
+          const {productsInBasket} = get();
+          set({
+            productsInBasket: productsInBasket.filter(
+              p => p.product.id !== productId,
+            ),
+          });
+        },
+        increaseProductQuantityInBasket: productId => {
+          const {productsInBasket} = get();
+          set({
+            productsInBasket: productsInBasket.map(p => {
+              if (p.product.id === productId) {
+                return {
+                  ...p,
+                  quantity: p.quantity + 1,
+                };
+              }
+              return p;
+            }),
+          });
+        },
+        decreaseProductQuantityInBasket: productId => {
+          const {productsInBasket} = get();
+          set({
+            productsInBasket: productsInBasket
+              .map(p => {
+                if (p.product.id === productId) {
+                  return {
+                    ...p,
+                    quantity: p.quantity - 1,
+                  };
+                }
+                return p;
+              })
+              .filter(p => p.quantity > 0),
+          });
+        },
+        resetAllProductsInBasket: () => {
+          set({
+            productsInBasket: [],
+          });
+        },
+      },
+    }),
+    {
+      name: 'products-store',
+      storage: createJSONStorage(() => zustandStorage),
+      partialize: state => ({}),
     },
-    decreaseProductQuantityInBasket: productId => {
-      const {productsInBasket} = get();
-      set({
-        productsInBasket: productsInBasket
-          .map(p => {
-            if (p.product.id === productId) {
-              return {
-                ...p,
-                quantity: p.quantity - 1,
-              };
-            }
-            return p;
-          })
-          .filter(p => p.quantity > 0),
-      });
-    },
-    resetAllProductsInBasket: () => {
-      set({
-        productsInBasket: [],
-      });
-    },
-  },
-}));
+  ),
+);
 
 export const useProductActions = (): ProductStore['actions'] =>
   useProductStore(state => state.actions);
