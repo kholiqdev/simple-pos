@@ -3,14 +3,14 @@ import {FlatList, type FlatListProps, type ListRenderItem} from 'react-native';
 
 import {Box, Gap} from '@components/atoms';
 import CategoryBadge from '@features/sales/components/CategoryBadge';
-import {type ICategoryItem} from '@features/sales/types/category';
+import {type Category} from '@features/sales/types/category';
 
 type CategoryBadgeListProps<T> = {
   data: T[];
 } & Omit<FlatListProps<T>, 'data' | 'renderItem'>;
 
 export default React.memo(function CategoryBadgeList(
-  props: CategoryBadgeListProps<ICategoryItem>,
+  props: CategoryBadgeListProps<Category>,
 ): JSX.Element {
   const {data, ...baseProps} = props;
   const [selectedCategory, setSelectedCategory] = React.useState(1);
@@ -22,7 +22,7 @@ export default React.memo(function CategoryBadgeList(
     [setSelectedCategory],
   );
 
-  const renderItem: ListRenderItem<ICategoryItem> = ({item}) => (
+  const renderItem: ListRenderItem<Category> = ({item}) => (
     <CategoryBadge
       iconName={item.iconName}
       isSelected={selectedCategory === item.id}
