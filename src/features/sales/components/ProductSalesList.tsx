@@ -1,26 +1,21 @@
 import React from 'react';
 import {FlatList, type FlatListProps, type ListRenderItem} from 'react-native';
 
+import {type IProduct} from '@features/sales/types/product';
 import {scale, verticalScale} from '@utils/layout';
 
 import ProductCard from './ProductCard';
-
-interface ProductItemProps {
-  id: number;
-  name: string;
-  price: number;
-}
 
 type ProductSalesListProps<T> = {
   data: T[];
 } & Omit<FlatListProps<T>, 'data' | 'renderItem'>;
 
 export default function ProductSalesList(
-  props: ProductSalesListProps<ProductItemProps>,
+  props: ProductSalesListProps<IProduct>,
 ): JSX.Element {
   const {data, ...baseProps} = props;
 
-  const renderItem: ListRenderItem<ProductItemProps> = ({item, index}) => {
+  const renderItem: ListRenderItem<IProduct> = ({item, index}) => {
     return (
       <ProductCard
         flex={index !== 4 ? 1 : 0.5}
