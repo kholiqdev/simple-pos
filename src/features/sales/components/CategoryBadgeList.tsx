@@ -12,7 +12,7 @@ interface CategoryItemProps {
 }
 
 type CategoryBadgeListProps<T> = {
-  data: CategoryItemProps[];
+  data: T[];
 } & Omit<FlatListProps<T>, 'data' | 'renderItem'>;
 
 export default React.memo(function CategoryBadgeList(
