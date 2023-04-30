@@ -9,21 +9,24 @@ const palette = {
   greenPrimary: '#0ECD9D',
   greenDark: '#0A906E',
 
-  black: '#0B0B0B',
-  white: '#F0F2F3',
+  black: '#282828',
+  whitePrimary: '#FCFCFC',
+  white: '#FFFFFF',
 };
 
 const theme = createTheme({
   colors: {
-    mainBackground: palette.white,
+    mainBackground: palette.whitePrimary,
     cardPrimaryBackground: palette.purplePrimary,
+    cardSecondaryBackground: palette.white,
     textPrimaryColor: palette.black,
   },
   spacing: {
-    s: 8,
-    m: 16,
-    l: 24,
-    xl: 40,
+    xs: 8,
+    s: 12,
+    m: 14,
+    l: 16,
+    xl: 18,
   },
   textVariants: {
     header: {
@@ -35,7 +38,8 @@ const theme = createTheme({
       lineHeight: 24,
     },
     defaults: {
-      // We can define a default text variant here.
+      fontSize: 14,
+      lineHeight: 18,
     },
   },
   borderRadii: {
