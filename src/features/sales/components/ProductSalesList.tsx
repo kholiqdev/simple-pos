@@ -1,9 +1,10 @@
 import React from 'react';
 import {FlatList, type FlatListProps, type ListRenderItem} from 'react-native';
 
-import {type IProduct} from '@features/sales/types/product';
+import {type Product} from '@features/sales/types/product';
 import {scale, verticalScale} from '@utils/layout';
 
+import {useProductActions} from '../store/product';
 import ProductCard from './ProductCard';
 
 type ProductSalesListProps<T> = {
@@ -11,16 +12,25 @@ type ProductSalesListProps<T> = {
 } & Omit<FlatListProps<T>, 'data' | 'renderItem'>;
 
 export default function ProductSalesList(
-  props: ProductSalesListProps<IProduct>,
+  props: ProductSalesListProps<Product>,
 ): JSX.Element {
   const {data, ...baseProps} = props;
 
-  const renderItem: ListRenderItem<IProduct> = ({item, index}) => {
+  const {addProductToBasket, decreaseProductQuantityInBasket} =
+    useProductActions();
+
+  const renderItem: ListRenderItem<Product> = ({item, index}) => {
     return (
       <ProductCard
         flex={index !== 4 ? 1 : 0.5}
         style={{marginRight: index % 2 === 0 ? scale(12) : 0}}
         data={item}
+        onIncrement={() => {
+          addProductToBasket(item);
+        }}
+        onDecrement={() => {
+          decreaseProductQuantityInBasket(item.id);
+        }}
       />
     );
   };
