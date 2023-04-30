@@ -19,6 +19,8 @@ import {
 } from '@features/sales/store/product';
 import {type Product} from '@features/sales/types/product';
 import useFilter, {type Filter} from '@hooks/useFilter';
+import {RouteNames} from '@navigation/routes';
+import {type SalesScreenProps} from '@navigation/types/app';
 import {type Theme} from '@theme/theme';
 
 const filterByCategory = (data: Product[], categoryId: number): Product[] => {
@@ -28,7 +30,8 @@ const filterByCategory = (data: Product[], categoryId: number): Product[] => {
   return data.filter(item => item.categoryId === categoryId);
 };
 
-export default function SalesScreen(): JSX.Element {
+export default function SalesScreen(props: SalesScreenProps): JSX.Element {
+  const {navigation} = props;
   const theme = useTheme<Theme>();
   const [filter, setFilter] = React.useState<Filter<Product>>({
     search: {
@@ -63,6 +66,10 @@ export default function SalesScreen(): JSX.Element {
     setFilter(newFilter);
   };
 
+  const navigateToOrderScreen = (): void => {
+    navigation.navigate(RouteNames.OrderScreen);
+  };
+
   return (
     <BaseLayout flex={1} pt="s">
       <HStack justifyContent="space-between" alignItems="center">
@@ -89,10 +96,13 @@ export default function SalesScreen(): JSX.Element {
       />
       <Gap height={12} />
       <ProductSalesList data={filteredProducts} />
-      <FloatingOrderButton
-        title={_('add_to_order')}
-        price={productInBasketTotalPrice}
-      />
+      {productInBasketCount > 0 ? (
+        <FloatingOrderButton
+          title={_('add_to_order')}
+          price={productInBasketTotalPrice}
+          onPress={navigateToOrderScreen}
+        />
+      ) : null}
     </BaseLayout>
   );
 }
