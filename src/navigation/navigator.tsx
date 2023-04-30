@@ -2,14 +2,12 @@ import * as React from 'react';
 
 import {NavigationContainer} from '@react-navigation/native';
 
-import SharedStack from '@navigation/stacks/SharedStack';
+import AppStack from '@navigation/stack';
 
 export default function Navigator(): JSX.Element {
-  const isAuthUser = true;
-
   return (
     <NavigationContainer>
-      {isAuthUser ? <SharedStack /> : <></>}
+      <AppStack />
     </NavigationContainer>
   );
 }

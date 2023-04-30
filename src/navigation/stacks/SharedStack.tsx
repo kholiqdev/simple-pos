@@ -1,17 +1,8 @@
-import * as React from 'react';
-
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-
 import SplashScreen from '@features/shared/screens/SplashScreen';
 import {RouteNames} from '@navigation/routes';
-import {
-  type SharedStackParamList,
-  type SharedStackRoutesType,
-} from '@navigation/types/shared';
+import {type SharedStackRoutesType} from '@navigation/types/shared';
 
-const Stack = createNativeStackNavigator<SharedStackParamList>();
-
-const sharedStackRoutes: SharedStackRoutesType = [
+export const sharedStackRoutes: SharedStackRoutesType = [
   {
     name: RouteNames.SplashScreen,
     component: SplashScreen,
@@ -20,17 +11,3 @@ const sharedStackRoutes: SharedStackRoutesType = [
     },
   },
 ];
-
-export default function SharedStack(): JSX.Element {
-  return (
-    <Stack.Navigator
-      screenOptions={{
-        headerShown: false,
-      }}
-      initialRouteName={RouteNames.SplashScreen}>
-      {sharedStackRoutes.map(routes => (
-        <Stack.Screen key={routes.name} {...routes} />
-      ))}
-    </Stack.Navigator>
-  );
-}
