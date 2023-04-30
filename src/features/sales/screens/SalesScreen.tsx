@@ -1,6 +1,7 @@
 import React from 'react';
 
 import {useTheme} from '@shopify/restyle';
+import {t as _} from 'i18next';
 
 import {Gap, HStack, IconMaterial, Input} from '@components/atoms';
 import {BaseLayout} from '@components/layouts';
@@ -57,7 +58,7 @@ export default function SalesScreen(): JSX.Element {
       </HStack>
       <Gap height={12} />
       <Input
-        placeholder="Search for products, brands and more"
+        placeholder={_('search_for_products_brands_and_more')}
         leftAddon={
           <IconMaterial
             name="magnify"
