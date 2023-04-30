@@ -6,6 +6,7 @@ module.exports = {
       {
         alias: [
           {'@features': './src/features'},
+          {'@data': './src/data'},
           {'@assets': './src/assets'},
           {'@hooks': './src/hooks'},
           {'@lib': './src/lib'},
