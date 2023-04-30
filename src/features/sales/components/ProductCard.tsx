@@ -17,7 +17,9 @@ type ProductCardProps = {
   };
 } & BoxProps;
 
-export default function ProductCard(props: ProductCardProps): JSX.Element {
+export default React.memo(function ProductCard(
+  props: ProductCardProps,
+): JSX.Element {
   const {onIncrement, onDecrement, data, ...baseProps} = props;
   const {id, name, price} = data;
   const productQty = useProductInBasketQuantityById(id);
@@ -49,4 +51,4 @@ export default function ProductCard(props: ProductCardProps): JSX.Element {
       />
     </Box>
   );
-}
+});

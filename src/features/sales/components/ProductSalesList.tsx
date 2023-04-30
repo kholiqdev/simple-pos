@@ -10,7 +10,7 @@ type ProductSalesListProps<T> = {
   data: T[];
 } & Omit<FlatListProps<T>, 'data' | 'renderItem'>;
 
-export default function ProductSalesList(
+export default React.memo(function ProductSalesList(
   props: ProductSalesListProps<Product>,
 ): JSX.Element {
   const {data, ...baseProps} = props;
@@ -45,4 +45,4 @@ export default function ProductSalesList(
       {...baseProps}
     />
   );
-}
+});

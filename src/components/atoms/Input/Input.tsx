@@ -12,7 +12,7 @@ type InputProps = {
 } & RestyleProps &
   TextInputProps;
 
-export default function Input(props: InputProps): JSX.Element {
+export default React.memo(function Input(props: InputProps): JSX.Element {
   const {leftAddon, rightAddon, ...baseProps} = useRestyle(
     restyleFunctions,
     props,
@@ -38,4 +38,4 @@ export default function Input(props: InputProps): JSX.Element {
       {rightAddon}
     </HStack>
   );
-}
+});

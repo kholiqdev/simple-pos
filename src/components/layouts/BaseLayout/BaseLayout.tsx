@@ -5,7 +5,9 @@ import {type BoxProps} from '@components/atoms/Box/Box';
 
 type BaseLayoutProps = BoxProps;
 
-export default function BaseLayout(props: BaseLayoutProps): JSX.Element {
+export default React.memo(function BaseLayout(
+  props: BaseLayoutProps,
+): JSX.Element {
   const {children, ...baseProps} = props;
 
   return (
@@ -13,4 +15,4 @@ export default function BaseLayout(props: BaseLayoutProps): JSX.Element {
       {children}
     </Box>
   );
-}
+});
