@@ -7,19 +7,23 @@ import {type Category} from '@features/sales/types/category';
 
 type CategoryBadgeListProps<T> = {
   data: T[];
+  onCategorySelected?: (id: number) => void;
 } & Omit<FlatListProps<T>, 'data' | 'renderItem'>;
 
 export default React.memo(function CategoryBadgeList(
   props: CategoryBadgeListProps<Category>,
 ): JSX.Element {
-  const {data, ...baseProps} = props;
+  const {data, onCategorySelected, ...baseProps} = props;
   const [selectedCategory, setSelectedCategory] = React.useState(1);
 
   const handleCategoryPress = React.useCallback(
     (id: number) => {
       setSelectedCategory(id);
+      if (onCategorySelected != null) {
+        onCategorySelected(id);
+      }
     },
-    [setSelectedCategory],
+    [setSelectedCategory, onCategorySelected],
   );
 
   const renderItem: ListRenderItem<Category> = ({item}) => (
