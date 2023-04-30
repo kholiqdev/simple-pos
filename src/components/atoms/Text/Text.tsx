@@ -12,5 +12,9 @@ type BaseTextProps = TextProps<Theme> & RNTextProps;
 export default React.memo(function Text(props: BaseTextProps) {
   const {children, ...baseProps} = props;
 
-  return <BaseText {...baseProps}>{children}</BaseText>;
+  return (
+    <BaseText color="textPrimaryColor" {...baseProps}>
+      {children}
+    </BaseText>
+  );
 });
