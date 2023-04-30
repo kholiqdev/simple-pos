@@ -1,4 +1,15 @@
-import {createTheme} from '@shopify/restyle';
+import {
+  backgroundColor,
+  type BackgroundColorProps,
+  border,
+  type BorderProps,
+  color,
+  type ColorProps,
+  composeRestyleFunctions,
+  createTheme,
+  spacing,
+  type SpacingProps,
+} from '@shopify/restyle';
 
 const palette = {
   purpleLight: '#8C6FF7',
@@ -9,8 +20,12 @@ const palette = {
   greenPrimary: '#0ECD9D',
   greenDark: '#0A906E',
 
+  grayLight: '#EAEAEA',
+  grayPrimary: '#999999',
+  grayDark: '#666666',
+
   black: '#282828',
-  whitePrimary: '#FCFCFC',
+  whitePrimary: '#F0F2F3',
   white: '#FFFFFF',
 };
 
@@ -19,7 +34,9 @@ const theme = createTheme({
     mainBackground: palette.whitePrimary,
     cardPrimaryBackground: palette.purplePrimary,
     cardSecondaryBackground: palette.white,
+    cardTertiaryBackground: palette.grayPrimary,
     textPrimaryColor: palette.black,
+    textSecondaryColor: palette.grayPrimary,
   },
   spacing: {
     xs: 8,
@@ -51,4 +68,17 @@ const theme = createTheme({
 });
 
 export type Theme = typeof theme;
+
+export type RestyleProps = SpacingProps<Theme> &
+  BorderProps<Theme> &
+  BackgroundColorProps<Theme> &
+  ColorProps<Theme>;
+
+export const restyleFunctions = composeRestyleFunctions<Theme, RestyleProps>([
+  spacing,
+  border,
+  backgroundColor,
+  color,
+]);
+
 export default theme;
