@@ -17,6 +17,8 @@ import {
 import {PERMISSIONS, requestMultiple, RESULTS} from 'react-native-permissions';
 import {BluetoothManager} from 'tp-react-native-bluetooth-printer';
 
+import {usePrinterActions} from '@features/shared/store/printer';
+
 interface usePrinterProps {
   bleOpend: boolean;
   loading: boolean;
@@ -35,6 +37,8 @@ export default function usePrinter(): usePrinterProps {
   const [loading, setLoading] = React.useState(true);
   const [name, setName] = React.useState('');
   const [boundAddress, setBoundAddress] = React.useState('');
+
+  const {setPrinter, removePrinter} = usePrinterActions();
 
   const deviceAlreadPaired = React.useCallback(
     (rsp: {devices: string}) => {
@@ -96,6 +100,7 @@ export default function usePrinter(): usePrinterProps {
         setLoading(false);
         setBoundAddress(row.address);
         setName(row.name || 'UNKNOWN');
+        setPrinter(row);
       },
       (e: any) => {
         setLoading(false);
@@ -111,6 +116,7 @@ export default function usePrinter(): usePrinterProps {
         setLoading(false);
         setBoundAddress('');
         setName('');
+        removePrinter();
       },
       (e: any) => {
         setLoading(false);
