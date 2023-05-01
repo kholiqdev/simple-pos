@@ -1,6 +1,3 @@
-import React from 'react';
-
-import {IconMaterial} from '@components/atoms';
 import ConnectPrinter from '@features/shared/screens/ConnectPrinter';
 import SplashScreen from '@features/shared/screens/SplashScreen';
 import {RouteNames} from '@navigation/routes';
@@ -21,7 +18,6 @@ export const sharedStackRoutes: SharedStackRoutesType = [
     options: {
       headerShown: true,
       headerTitle: 'Bluetooth Printer',
-      headerLeft: () => <IconMaterial name="chevron-left" size={24} />,
       headerStyle: {
         backgroundColor: theme.colors.mainBackground,
       },
