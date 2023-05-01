@@ -12,5 +12,10 @@
   "request_permission_bluetooth_message": "SimplePOS needs to access bluetooth to connect to the printer",
   "later": "Later",
   "no": "No",
-  "yes": "Yes"
+  "yes": "Yes",
+  "pay": "Pay",
+  "input_money_amount": "Input money amount",
+  "subtotal": "Subtotal",
+  "money_change": "Change",
+  "money_not_enough": "Money not enough"
 }
