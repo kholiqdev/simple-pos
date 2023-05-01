@@ -5,34 +5,58 @@ import {
   FlatList,
   type ListRenderItem,
   Pressable,
+  RefreshControl,
 } from 'react-native';
 
+import {t as _} from 'i18next';
 import {type BluetoothDevice} from 'tp-react-native-bluetooth-printer';
 
 import {Box, Gap, HStack, Text, VStack} from '@components/atoms';
 import {BaseLayout} from '@components/layouts';
+import {useGetPrinter} from '@features/shared/store/printer';
 import usePrinter from '@hooks/usePrinter';
 import theme from '@theme/theme';
-
-import {useGetPrinter} from '../store/printer';
 
 export default function ConnectPrinter(): JSX.Element {
   const {
     connect,
     unPair,
     scanBluetoothDevice,
-    loading,
+    isLoading,
     bleOpend,
     pairedDevices,
   } = usePrinter();
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      void scanBluetoothDevice();
+      setRefreshing(false);
+    }, 2000);
+  }, []);
 
   const printerDevice = useGetPrinter();
+
+  const onPressConnect = React.useCallback(
+    (device: BluetoothDevice) => {
+      const isPaired = device.address === printerDevice.address;
+
+      if (isPaired) {
+        unPair(device.address);
+        return;
+      }
+      void connect(device);
+    },
+    [unPair, connect, printerDevice.address],
+  );
 
   React.useEffect(() => {
     void scanBluetoothDevice();
   }, []);
 
   const renderItem: ListRenderItem<BluetoothDevice> = ({item, index}) => {
+    const isPaired = item.address === printerDevice.address;
     return (
       <HStack
         justifyContent="space-between"
@@ -47,18 +71,14 @@ export default function ConnectPrinter(): JSX.Element {
 
         <Pressable
           onPress={() => {
-            if (item.address === printerDevice?.address) {
-              unPair(item.address);
-              return;
-            }
-            connect(item);
+            onPressConnect(item);
           }}>
           <Box
             backgroundColor="buttonPrimaryBackground"
             p="xs"
             style={{borderRadius: 5}}>
             <Text color="textTertiaryColor" fontWeight="bold">
-              {item.address === printerDevice?.address ? 'Unpair' : 'Pair'}
+              {isPaired ? _('unpair') : _('pair')}
             </Text>
           </Box>
         </Pressable>
@@ -76,7 +96,7 @@ export default function ConnectPrinter(): JSX.Element {
         {bleOpend ? 'Bluetooth Active' : 'Bluetooth Inactive'}
       </Text>
       <Gap height={12} />
-      {loading ? (
+      {isLoading ? (
         <ActivityIndicator size="large" color={theme.colors.textPrimaryColor} />
       ) : null}
       <FlatList
@@ -84,6 +104,10 @@ export default function ConnectPrinter(): JSX.Element {
         ItemSeparatorComponent={() => <Gap height={12} />}
         keyExtractor={item => item.address}
         renderItem={renderItem}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+        refreshing={isLoading}
       />
     </BaseLayout>
   );
