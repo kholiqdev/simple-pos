@@ -14,7 +14,7 @@ import {BaseLayout} from '@components/layouts';
 import usePrinter from '@hooks/usePrinter';
 import theme from '@theme/theme';
 
-export default function ConnectPrinterTest(): JSX.Element {
+export default function ConnectPrinter(): JSX.Element {
   const {
     connect,
     unPair,
