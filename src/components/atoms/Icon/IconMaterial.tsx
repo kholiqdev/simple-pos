@@ -1,5 +1,5 @@
 import React from 'react';
-import {Pressable} from 'react-native';
+import {TouchableOpacity} from 'react-native';
 
 import {useTheme} from '@shopify/restyle';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -26,10 +26,10 @@ export default React.memo(function IconMaterial(props: IconMaterialProps) {
   } = props;
 
   return (
-    <Pressable onPress={onPress}>
+    <TouchableOpacity onPress={onPress}>
       <Box testID={testID} {...baseProps}>
         <Icon name={name} size={size} color={color} />
       </Box>
-    </Pressable>
+    </TouchableOpacity>
   );
 });
