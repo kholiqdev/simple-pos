@@ -3,5 +3,14 @@
   "point_of_sale": "Point of Sale",
   "search_for_products_brands_and_more": "Cari produk, brand, dan lainnya",
   "add_to_order": "Tambahkan ke pesanan",
-  "pay_now": "Bayar Sekarang"
+  "pay_now": "Bayar Sekarang",
+  "pair": "Pair",
+  "unpair": "Unpair",
+  "pairing_success_notification": "Berhasil terhubung ke ${name}",
+  "pairing_failed_notification": "Gagal terhubung ke ${name}",
+  "request_permission_bluetooth_title": "SimplePOS meminta izin untuk mengakses bluetooth",
+  "request_permission_bluetooth_message": "SimplePOS membutuhkan izin untuk mengakses bluetooth",
+  "later": "Nanti",
+  "no": "Tidak",
+  "ya": "Ya"
 }
