@@ -25,6 +25,7 @@ import {
   useProductsInBasket,
   useProductsInBasketCount,
 } from '@features/sales/store/product';
+import {useTransactionActions} from '@features/sales/store/transaction';
 import {type ProductInBasket} from '@features/sales/types/product';
 import useBottomSheet from '@hooks/useBottomSheet';
 import {formatCurrency, formatCurrencyTextInput} from '@utils/currency';
@@ -37,6 +38,8 @@ export default function OrderScreen(props: OrderScreenProps): JSX.Element {
   const {navigation} = props;
   const [money, setMoney] = React.useState<string>('0');
   const [moneyChange, setMoneyChange] = React.useState<number>(0);
+
+  const {addTransaction} = useTransactionActions();
 
   const {resetAllProductsInBasket} = useProductActions();
   const productInBasket = useProductsInBasket();
@@ -143,10 +146,20 @@ export default function OrderScreen(props: OrderScreenProps): JSX.Element {
 
   const handlePay = async (): Promise<void> => {
     try {
-      if (moneyChange <= 0) {
+      if (
+        (moneyChange < 0 && safeParseInt(money) > 0) ||
+        (moneyChange === 0 && safeParseInt(money) === 0)
+      ) {
         ToastAndroid.show(_('money_not_enough'), ToastAndroid.SHORT);
       } else {
         await printReceipt();
+
+        addTransaction({
+          id: new Date().getTime(),
+          date: `${new Date().getDate()}/${new Date().getMonth()}/${new Date().getFullYear()} ${new Date().getHours()}:${new Date().getMinutes()}`,
+          products: productInBasket,
+          total: productInBasketTotalPrice,
+        });
         resetAllProductsInBasket();
       }
     } catch (error) {

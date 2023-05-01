@@ -20,7 +20,7 @@ export type SharedStackRouteProp<RouteName extends keyof SharedStackParamList> =
 
 export type SharedStackRoutesType = StackRoutesType<SharedStackParamList>;
 
-export type ConnectPrinterScreenProps = NativeStackScreenProps<
+export type SplashScreenProps = NativeStackScreenProps<
   SharedStackParamList,
-  RouteNames.ConnectPrinterScreen
+  RouteNames.SplashScreen
 >;

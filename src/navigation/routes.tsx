@@ -3,4 +3,5 @@ export enum RouteNames {
   SalesScreen = 'SalesScreen',
   OrderScreen = 'OrderScreen',
   ConnectPrinterScreen = 'ConnectPrinterScreen',
+  TransactionHistoryScreen = 'TransactionHistoryScreen',
 }

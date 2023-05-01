@@ -6,11 +6,9 @@ import {Box, Text} from '@components/atoms';
 import {useGetPrinter} from '@features/shared/store/printer';
 import usePrinter from '@hooks/usePrinter';
 import {RouteNames} from '@navigation/routes';
-import {type ConnectPrinterScreenProps} from '@navigation/types/shared';
+import {type SplashScreenProps} from '@navigation/types/shared';
 
-export default function SplashScreen(
-  props: ConnectPrinterScreenProps,
-): JSX.Element {
+export default function SplashScreen(props: SplashScreenProps): JSX.Element {
   const {navigation} = props;
   const printerDevice = useGetPrinter();
   const {connect} = usePrinter();

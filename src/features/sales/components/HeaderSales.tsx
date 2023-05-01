@@ -24,14 +24,26 @@ export default React.memo(function HeaderSales(
     navigation.navigate(RouteNames.ConnectPrinterScreen);
   };
 
+  const navigateToTransactionHistoryScreen = (): void => {
+    navigation.navigate(RouteNames.TransactionHistoryScreen);
+  };
+
   return (
     <HStack justifyContent="space-between" alignItems="center">
-      <IconMaterial
-        name="printer"
-        size={24}
-        p="xs"
-        onPress={navigateToConnectPrinterScreen}
-      />
+      <HStack>
+        <IconMaterial
+          name="printer"
+          size={24}
+          p="xs"
+          onPress={navigateToConnectPrinterScreen}
+        />
+        <IconMaterial
+          name="receipt"
+          size={24}
+          p="xs"
+          onPress={navigateToTransactionHistoryScreen}
+        />
+      </HStack>
       <CartCounter count={data.basketCount} />
     </HStack>
   );

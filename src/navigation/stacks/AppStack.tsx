@@ -1,3 +1,4 @@
+import {TransactionHistoryScreen} from '@features/sales/screens';
 import OrderScreen from '@features/sales/screens/OrderScreen';
 import SalesScreen from '@features/sales/screens/SalesScreen';
 import {RouteNames} from '@navigation/routes';
@@ -20,6 +21,17 @@ export const appStackRoutes: AppStackRoutesType = [
     options: {
       headerShown: true,
       headerTitle: 'Order',
+      headerStyle: {
+        backgroundColor: theme.colors.mainBackground,
+      },
+    },
+  },
+  {
+    name: RouteNames.TransactionHistoryScreen,
+    component: TransactionHistoryScreen as React.ComponentType,
+    options: {
+      headerShown: true,
+      headerTitle: 'Transaction History',
       headerStyle: {
         backgroundColor: theme.colors.mainBackground,
       },
