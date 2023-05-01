@@ -17,7 +17,7 @@ import {useGetPrinter} from '@features/shared/store/printer';
 import usePrinter from '@hooks/usePrinter';
 import theme from '@theme/theme';
 
-export default function ConnectPrinter(): JSX.Element {
+export default function ConnectPrinterScreen(): JSX.Element {
   const {
     connect,
     unPair,
