@@ -1,39 +1,43 @@
 import React from 'react';
 import {TextInput, type TextInputProps} from 'react-native';
 
-import {useRestyle, useTheme} from '@shopify/restyle';
+import {useTheme} from '@shopify/restyle';
 
 import {HStack} from '@components/atoms/HStack';
-import {restyleFunctions, type RestyleProps, type Theme} from '@theme/theme';
+import {type Theme} from '@theme/theme';
+
+import {type BoxProps} from '../Box/Box';
 
 type InputProps = {
   leftAddon?: string | JSX.Element;
   rightAddon?: string | JSX.Element;
-} & RestyleProps &
+} & BoxProps &
   TextInputProps;
 
 export default React.memo(function Input(props: InputProps): JSX.Element {
-  const {leftAddon, rightAddon, ...baseProps} = useRestyle(
-    restyleFunctions,
-    props,
-  );
   const theme = useTheme<Theme>();
+  const {
+    leftAddon,
+    rightAddon,
+    placeholderTextColor = theme.colors.textSecondaryColor,
+    ...baseProps
+  } = props;
 
   return (
     <HStack
       style={{borderRadius: 15}}
-      backgroundColor="cardSecondaryBackground"
       alignItems="center"
-      px="xs">
+      px="xs"
+      {...baseProps}>
       {leftAddon}
       <TextInput
-        placeholderTextColor={theme.colors.textSecondaryColor}
-        {...baseProps}
+        placeholderTextColor={placeholderTextColor}
         style={{
           flex: 1,
           color: theme.colors.textPrimaryColor,
         }}
         cursorColor={theme.colors.textSecondaryColor}
+        {...(props as Omit<TextInputProps, keyof typeof props>)}
       />
       {rightAddon}
     </HStack>
