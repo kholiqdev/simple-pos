@@ -14,6 +14,8 @@ import {BaseLayout} from '@components/layouts';
 import usePrinter from '@hooks/usePrinter';
 import theme from '@theme/theme';
 
+import {useGetPrinter} from '../store/printer';
+
 export default function ConnectPrinter(): JSX.Element {
   const {
     connect,
@@ -22,8 +24,9 @@ export default function ConnectPrinter(): JSX.Element {
     loading,
     bleOpend,
     pairedDevices,
-    boundAddress,
   } = usePrinter();
+
+  const printerDevice = useGetPrinter();
 
   React.useEffect(() => {
     void scanBluetoothDevice();
@@ -44,7 +47,7 @@ export default function ConnectPrinter(): JSX.Element {
 
         <Pressable
           onPress={() => {
-            if (item.address === boundAddress) {
+            if (item.address === printerDevice?.address) {
               unPair(item.address);
               return;
             }
@@ -55,7 +58,7 @@ export default function ConnectPrinter(): JSX.Element {
             p="xs"
             style={{borderRadius: 5}}>
             <Text color="textTertiaryColor" fontWeight="bold">
-              {item.address === boundAddress ? 'Unpair' : 'Pair'}
+              {item.address === printerDevice?.address ? 'Unpair' : 'Pair'}
             </Text>
           </Box>
         </Pressable>

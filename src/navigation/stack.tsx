@@ -19,7 +19,7 @@ export default function AppStack(): JSX.Element {
         headerBackTitleVisible: false,
         animation: 'fade_from_bottom',
       }}
-      initialRouteName={RouteNames.ConnectPrinterScreen}>
+      initialRouteName={RouteNames.SalesScreen}>
       {isAuthUser ? (
         <>
           <Stack.Group>

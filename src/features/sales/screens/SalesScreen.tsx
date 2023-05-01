@@ -1,4 +1,5 @@
 import React from 'react';
+import {Pressable} from 'react-native';
 
 import {useTheme} from '@shopify/restyle';
 import {t as _} from 'i18next';
@@ -70,12 +71,18 @@ export default function SalesScreen(props: SalesScreenProps): JSX.Element {
     navigation.navigate(RouteNames.OrderScreen);
   };
 
+  const navigateToConnectPrinterScreen = (): void => {
+    navigation.navigate(RouteNames.ConnectPrinterScreen);
+  };
+
   return (
     <BaseLayout flex={1} pt="s">
-      <HStack justifyContent="space-between" alignItems="center">
-        <IconMaterial name="menu" size={24} />
-        <CartCounter count={productInBasketCount} />
-      </HStack>
+      <Pressable onPress={navigateToConnectPrinterScreen}>
+        <HStack justifyContent="space-between" alignItems="center">
+          <IconMaterial name="printer" size={24} />
+          <CartCounter count={productInBasketCount} />
+        </HStack>
+      </Pressable>
       <Gap height={12} />
       <Input
         placeholder={_('search_for_products_brands_and_more')}
