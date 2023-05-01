@@ -6,13 +6,17 @@ import {zustandStorage} from '@lib/storage';
 
 import {type PrinterStore} from '../types/printer';
 
+const initialState: Pick<PrinterStore, 'printer'> = {
+  printer: {
+    name: '',
+    address: '',
+  },
+};
+
 const usePrinterStore = create<PrinterStore>()(
   persist(
     set => ({
-      printer: {
-        name: '',
-        address: '',
-      },
+      ...initialState,
       actions: {
         setPrinter: device => {
           set({

@@ -14,46 +14,52 @@ import {
   ToastAndroid,
 } from 'react-native';
 
+import {t as _} from 'i18next';
 import {PERMISSIONS, requestMultiple, RESULTS} from 'react-native-permissions';
-import {BluetoothManager} from 'tp-react-native-bluetooth-printer';
+import {
+  type BluetoothDevice,
+  BluetoothManager,
+} from 'tp-react-native-bluetooth-printer';
 
 import {usePrinterActions} from '@features/shared/store/printer';
 
 interface usePrinterProps {
   bleOpend: boolean;
-  loading: boolean;
+  isLoading: boolean;
   name: string;
-  pairedDevices: any[];
+  pairedDevices: BluetoothDevice[];
   boundAddress: string;
-  connect: (row: {address: React.SetStateAction<string>; name: any}) => void;
-  unPair: (address: any) => void;
+  connect: (row: BluetoothDevice) => Promise<void>;
+  unPair: (address: BluetoothDevice['address']) => void;
   scanBluetoothDevice: () => Promise<void>;
 }
 
 export default function usePrinter(): usePrinterProps {
-  const [pairedDevices, setPairedDevices] = React.useState([]);
+  const [pairedDevices, setPairedDevices] = React.useState<BluetoothDevice[]>(
+    [],
+  );
   const [foundDs, setFoundDs] = React.useState([]);
   const [bleOpend, setBleOpend] = React.useState(false);
-  const [loading, setLoading] = React.useState(true);
+  const [isLoading, setIsLoading] = React.useState(true);
   const [name, setName] = React.useState('');
   const [boundAddress, setBoundAddress] = React.useState('');
 
   const {setPrinter, removePrinter} = usePrinterActions();
 
   const deviceAlreadPaired = React.useCallback(
-    (rsp: {devices: string}) => {
-      let ds = null;
+    (rsp: {devices: BluetoothDevice[]}) => {
+      let ds: BluetoothDevice[] = [];
       if (typeof rsp.devices === 'object') {
         ds = rsp.devices;
       } else {
         try {
-          ds = JSON.parse(rsp.devices);
+          ds = JSON.parse(rsp.devices) as BluetoothDevice[];
         } catch (e) {}
       }
-      if (ds && ds.length) {
-        let pared = pairedDevices;
+      if (ds.length > 0) {
+        let pared: BluetoothDevice[] = pairedDevices;
         if (pared.length < 1) {
-          pared = pared.concat(ds || []);
+          pared = pared.concat(ds);
         }
         setPairedDevices(pared);
       }
@@ -74,7 +80,7 @@ export default function usePrinter(): usePrinterProps {
         // ignore error
       }
 
-      if (r) {
+      if (r != null) {
         const found = foundDs || [];
         if (found.findIndex) {
           const duplicated = found.findIndex(function (x) {
@@ -90,43 +96,48 @@ export default function usePrinter(): usePrinterProps {
     [foundDs],
   );
 
-  const connect = (row: {
-    address: React.SetStateAction<string>;
-    name: string;
-  }) => {
-    setLoading(true);
-    BluetoothManager.connect(row.address as string).then(
-      (s: any) => {
-        setLoading(false);
-        setBoundAddress(row.address);
-        setName(row.name || 'UNKNOWN');
-        setPrinter(row);
-      },
-      (e: any) => {
-        setLoading(false);
-        console.warn(e);
-      },
-    );
+  const connect = async (row: BluetoothDevice): Promise<void> => {
+    setIsLoading(true);
+    try {
+      await BluetoothManager.connect(row.address);
+
+      setIsLoading(false);
+      setBoundAddress(row.address);
+      setName(row.name);
+      setPrinter(row);
+
+      ToastAndroid.show(
+        _('pairing_success_notification', {name: row.name}),
+        ToastAndroid.SHORT,
+      );
+    } catch (error) {
+      setIsLoading(false);
+      ToastAndroid.show(
+        _('pairing_failed_notification', {name: row.name}),
+        ToastAndroid.SHORT,
+      );
+      console.warn(error);
+    }
   };
 
   const unPair = (address: any) => {
-    setLoading(true);
+    setIsLoading(true);
     BluetoothManager.unpair(address).then(
       (s: any) => {
-        setLoading(false);
+        setIsLoading(false);
         setBoundAddress('');
         setName('');
         removePrinter();
       },
       (e: any) => {
-        setLoading(false);
+        setIsLoading(false);
         console.warn(e);
       },
     );
   };
 
   const scanDevices = React.useCallback(() => {
-    setLoading(true);
+    setIsLoading(true);
     BluetoothManager.scanDevices().then(
       (s: {found: any}) => {
         // const pairedDevices = s.paired;
@@ -141,10 +152,10 @@ export default function usePrinter(): usePrinterProps {
           fds = found;
         }
         setFoundDs(fds);
-        setLoading(false);
+        setIsLoading(false);
       },
       (er: any) => {
-        setLoading(false);
+        setIsLoading(false);
         // ignore
       },
     );
@@ -152,14 +163,13 @@ export default function usePrinter(): usePrinterProps {
 
   const scan = React.useCallback(() => {
     try {
-      async function blueTooth() {
+      async function blueTooth(): Promise<void> {
         const permissions = {
-          title: 'SimplePOS bluetooth meminta izin untuk mengakses bluetooth',
-          message:
-            'SimplePOS bluetooth memerlukan akses ke bluetooth untuk proses koneksi ke bluetooth printer',
-          buttonNeutral: 'Lain Waktu',
-          buttonNegative: 'Tidak',
-          buttonPositive: 'Boleh',
+          title: _('request_permission_bluettoh'),
+          message: _('request_permission_bluettoh_message'),
+          buttonNeutral: _('later'),
+          buttonNegative: _('no'),
+          buttonPositive: _('yes'),
         };
 
         const bluetoothConnectGranted = await PermissionsAndroid.request(
@@ -185,7 +195,7 @@ export default function usePrinter(): usePrinterProps {
   }, [scanDevices]);
 
   const scanBluetoothDevice = async (): Promise<void> => {
-    setLoading(true);
+    setIsLoading(true);
     try {
       const request = await requestMultiple([
         PERMISSIONS.ANDROID.BLUETOOTH_CONNECT,
@@ -197,12 +207,12 @@ export default function usePrinter(): usePrinterProps {
         request['android.permission.ACCESS_FINE_LOCATION'] === RESULTS.GRANTED
       ) {
         scanDevices();
-        setLoading(false);
+        setIsLoading(false);
       } else {
-        setLoading(false);
+        setIsLoading(false);
       }
     } catch (err) {
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
@@ -210,7 +220,7 @@ export default function usePrinter(): usePrinterProps {
     const checkBluetoothEnabled = async (): Promise<void> => {
       const enabled = await BluetoothManager.isBluetoothEnabled();
       setBleOpend(enabled);
-      setLoading(false);
+      setIsLoading(false);
     };
     void checkBluetoothEnabled();
 
@@ -274,7 +284,7 @@ export default function usePrinter(): usePrinterProps {
     connect,
     unPair,
     scanBluetoothDevice,
-    loading,
+    isLoading,
     bleOpend,
     name,
     pairedDevices,

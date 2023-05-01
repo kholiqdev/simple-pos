@@ -5,9 +5,8 @@ import React from 'react';
 
 import {BluetoothEscposPrinter} from 'tp-react-native-bluetooth-printer';
 
+import {type ProductInBasket} from '@features/sales/types/product';
 import {formatCurrency} from '@utils/currency';
-
-import {type ProductInBasket} from '../types/product';
 
 export default function useReceipt(baskets: ProductInBasket[]): {
   printReceipt: () => Promise<void>;
