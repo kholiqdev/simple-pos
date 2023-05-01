@@ -1,15 +1,14 @@
 import React from 'react';
-import {Pressable} from 'react-native';
 
 import {useTheme} from '@shopify/restyle';
 import {t as _} from 'i18next';
 
-import {Gap, HStack, IconMaterial, Input} from '@components/atoms';
+import {Gap, IconMaterial, Input} from '@components/atoms';
 import {BaseLayout} from '@components/layouts';
 import {
-  CartCounter,
   CategoryBadgeList,
   FloatingOrderButton,
+  HeaderSales,
   ProductSalesList,
 } from '@features/sales/components';
 import {
@@ -47,8 +46,8 @@ export default function SalesScreen(props: SalesScreenProps): JSX.Element {
   const [categoryFilter, setCategoryFilter] = React.useState<number>(1);
 
   const productCategories = useGetProductCategories();
-  const products = useGetProducts();
   const productInBasketCount = useProductsInBasketCount();
+  const products = useGetProducts();
   const productInBasketTotalPrice = useProductInBasketTotalPrice();
 
   const filteredProducts = filterByCategory(
@@ -71,18 +70,9 @@ export default function SalesScreen(props: SalesScreenProps): JSX.Element {
     navigation.navigate(RouteNames.OrderScreen);
   };
 
-  const navigateToConnectPrinterScreen = (): void => {
-    navigation.navigate(RouteNames.ConnectPrinterScreen);
-  };
-
   return (
     <BaseLayout flex={1} pt="s">
-      <Pressable onPress={navigateToConnectPrinterScreen}>
-        <HStack justifyContent="space-between" alignItems="center">
-          <IconMaterial name="printer" size={24} />
-          <CartCounter count={productInBasketCount} />
-        </HStack>
-      </Pressable>
+      <HeaderSales data={{basketCount: productInBasketCount}} />
       <Gap height={12} />
       <Input
         placeholder={_('search_for_products_brands_and_more')}

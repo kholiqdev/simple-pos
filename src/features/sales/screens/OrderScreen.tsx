@@ -7,6 +7,11 @@ import {t as _} from 'i18next';
 import {Gap} from '@components/atoms';
 import {BaseLayout} from '@components/layouts';
 import {
+  FloatingOrderButton,
+  ProductBasketCard,
+} from '@features/sales/components';
+import useReceipt from '@features/sales/hooks/useReceipt';
+import {
   useProductActions,
   useProductInBasketTotalPrice,
   useProductsInBasket,
@@ -15,9 +20,6 @@ import {
 import {type ProductInBasket} from '@features/sales/types/product';
 import {RouteNames} from '@navigation/routes';
 import {type OrderScreenProps} from '@navigation/types/app';
-
-import {FloatingOrderButton, ProductBasketCard} from '../components';
-import useReceipt from '../hooks/useReceipt';
 
 export default function OrderScreen(props: OrderScreenProps): JSX.Element {
   const {navigation} = props;
@@ -44,7 +46,7 @@ export default function OrderScreen(props: OrderScreenProps): JSX.Element {
     if (productInBasketCount === 0) {
       navigation.navigate(RouteNames.SalesScreen);
     }
-  }, [productInBasketCount]);
+  }, [productInBasketCount, navigation]);
 
   return (
     <BaseLayout flex={1}>
