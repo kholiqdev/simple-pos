@@ -8,7 +8,7 @@ import {verticalScale} from '@utils/layout';
 
 type FloatingOrderButtonProps = {
   title: string;
-  price: number;
+  price?: number;
   onPress?: () => void;
 } & HStackProps;
 
@@ -30,9 +30,11 @@ export default React.memo(function FloatingOrderButton(
         <Text color="textTertiaryColor" fontSize={16} fontWeight="bold">
           {title}
         </Text>
-        <Text color="textTertiaryColor" fontSize={16} fontWeight="bold">
-          {formatCurrency(price)}
-        </Text>
+        {price !== undefined ? (
+          <Text color="textTertiaryColor" fontSize={16} fontWeight="bold">
+            {formatCurrency(price)}
+          </Text>
+        ) : null}
       </HStack>
     </Pressable>
   );

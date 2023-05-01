@@ -85,6 +85,7 @@ export default function SalesScreen(props: SalesScreenProps): JSX.Element {
         }
         onChangeText={onSearch}
         value={filter.search.query}
+        backgroundColor="cardSecondaryBackground"
       />
       <Gap height={12} />
       <CategoryBadgeList

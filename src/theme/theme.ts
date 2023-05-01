@@ -52,6 +52,7 @@ const theme = createTheme({
     header: {
       fontWeight: 'bold',
       fontSize: 34,
+      lineHeight: 40,
     },
     body: {
       fontSize: 16,
