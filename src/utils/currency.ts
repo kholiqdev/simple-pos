@@ -7,3 +7,10 @@ export const formatCurrency = (amount: number, currency = 'IDR'): string => {
   }).format(amount);
   return resultCurrenct ?? `${currency} ${amount}`;
 };
+
+export const formatCurrencyTextInput = (value: string): string => {
+  return value
+    .replace(/^[0]/, '')
+    .replace(/[^0-9]/g, '')
+    .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
+};
