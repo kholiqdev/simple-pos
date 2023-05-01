@@ -1,5 +1,7 @@
 import React from 'react';
 
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
+
 import {Box} from '@components/atoms';
 import {type BoxProps} from '@components/atoms/Box/Box';
 
@@ -11,8 +13,10 @@ export default React.memo(function BaseLayout(
   const {children, ...baseProps} = props;
 
   return (
-    <Box px="s" backgroundColor="mainBackground" {...baseProps}>
-      {children}
-    </Box>
+    <GestureHandlerRootView style={{flex: 1, padding: 0}}>
+      <Box px="s" backgroundColor="mainBackground" {...baseProps}>
+        {children}
+      </Box>
+    </GestureHandlerRootView>
   );
 });
