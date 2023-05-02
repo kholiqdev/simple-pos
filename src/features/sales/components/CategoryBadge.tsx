@@ -37,6 +37,7 @@ export default React.memo(function CategoryBadge(
               ? theme.colors.textPrimaryColor
               : theme.colors.textSecondaryColor
           }
+          onPress={onPress}
         />
       </Box>
     </TouchableOpacity>
