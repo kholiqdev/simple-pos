@@ -17,5 +17,7 @@
   "input_money_amount": "Masukkan jumlah uang",
   "subtotal": "Subtotal",
   "money_change": "Kembalian",
-  "money_not_enough": "Uang tidak cukup"
+  "money_not_enough": "Uang tidak cukup",
+  "no_transaction_history": "Tidak ada riwayat transaksi",
+  "total_items": "Total item"
 }

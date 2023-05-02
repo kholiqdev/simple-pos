@@ -62,11 +62,7 @@ export default function OrderScreen(props: OrderScreenProps): JSX.Element {
   );
 
   const renderItemBasket: ListRenderItem<ProductInBasket> = ({item}) => (
-    <HStack
-      key={item.product.id.toString()}
-      justifyContent="space-between"
-      alignItems="center"
-      marginBottom="s">
+    <HStack justifyContent="space-between" alignItems="center" marginBottom="s">
       <VStack>
         <Text variant="body" color="textPrimaryColor">
           {item.product.name}

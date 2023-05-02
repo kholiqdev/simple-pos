@@ -1,6 +1,8 @@
 import React from 'react';
 import {FlatList, type ListRenderItem} from 'react-native';
 
+import {t as _} from 'i18next';
+
 import {Box, Gap, HStack, Text} from '@components/atoms';
 import {BaseLayout} from '@components/layouts';
 import {formatCurrency} from '@utils/currency';
@@ -24,7 +26,7 @@ export default function TransactionHistoryScreen(): JSX.Element {
         </HStack>
         <Gap height={12} />
         <HStack justifyContent="space-between">
-          <Text>Total Item</Text>
+          <Text>{_('total_items')}</Text>
           <Text>x{item.products.length}</Text>
           <Text>{formatCurrency(item.total)}</Text>
         </HStack>
@@ -38,6 +40,12 @@ export default function TransactionHistoryScreen(): JSX.Element {
         data={transactions}
         renderItem={renderItem}
         ItemSeparatorComponent={() => <Gap height={12} />}
+        ListEmptyComponent={() => (
+          <>
+            <Gap height={40} />
+            <Text textAlign="center">{_('no_transaction_history')}</Text>
+          </>
+        )}
       />
     </BaseLayout>
   );

@@ -17,5 +17,7 @@
   "input_money_amount": "Input money amount",
   "subtotal": "Subtotal",
   "money_change": "Change",
-  "money_not_enough": "Money not enough"
+  "money_not_enough": "Money not enough",
+  "no_transaction_history": "No transaction history",
+  "total_items": "Total items"
 }

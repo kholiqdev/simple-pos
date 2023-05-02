@@ -42,6 +42,7 @@ export default React.memo(function ProductSalesList(
       contentContainerStyle={{paddingBottom: 12}}
       columnWrapperStyle={{marginTop: verticalScale(12)}}
       renderItem={renderItem}
+      showsVerticalScrollIndicator={false}
       {...baseProps}
     />
   );
