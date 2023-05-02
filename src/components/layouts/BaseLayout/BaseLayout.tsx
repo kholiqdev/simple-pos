@@ -1,4 +1,5 @@
 import React from 'react';
+import {Keyboard, SafeAreaView} from 'react-native';
 
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 
@@ -14,9 +15,18 @@ export default React.memo(function BaseLayout(
 
   return (
     <GestureHandlerRootView style={{flex: 1, padding: 0}}>
-      <Box px="s" backgroundColor="mainBackground" {...baseProps}>
-        {children}
-      </Box>
+      <SafeAreaView style={{flex: 1}}>
+        <Box
+          onStartShouldSetResponder={() => {
+            Keyboard.dismiss();
+            return false;
+          }}
+          px="s"
+          backgroundColor="mainBackground"
+          {...baseProps}>
+          {children}
+        </Box>
+      </SafeAreaView>
     </GestureHandlerRootView>
   );
 });
